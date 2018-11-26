@@ -2,7 +2,7 @@ var setting = {
     data: {
         simpleData: {
             enable: true,
-            idKey: "deptId",
+            idKey: "id",
             pIdKey: "parentId",
             rootPId: -1
         },
@@ -27,7 +27,7 @@ var vm = new Vue({
     methods: {
         getDept: function(){
             //加载部门树
-            $.get(baseURL + "sys/dept/select", function(r){
+            $.get(baseURL + "sys/organization/select", function(r){
                 ztree = $.fn.zTree.init($("#deptTree"), setting, r.deptList);
                 var node = ztree.getNodeByParam("deptId", vm.dept.parentId);
                 ztree.selectNode(node);
@@ -47,7 +47,7 @@ var vm = new Vue({
                 return ;
             }
 
-            $.get(baseURL + "sys/dept/info/"+deptId, function(r){
+            $.get(baseURL + "sys/organization/info/"+deptId, function(r){
                 vm.showList = false;
                 vm.title = "修改";
                 vm.dept = r.dept;
@@ -64,10 +64,10 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
-                    url: baseURL + "sys/dept/delete",
+                    url: baseURL + "sys/organization/delete",
                     data: "deptId=" + deptId,
                     success: function(r){
-                        if(r.code === 0){
+                        if(r.code === 1){
                             alert('操作成功', function(){
                                 vm.reload();
                             });
@@ -119,12 +119,12 @@ var vm = new Vue({
         },
         reload: function () {
             vm.showList = true;
-            Dept.table.refresh();
+            Organization.table.refresh();
         }
     }
 });
 
-var Dept = {
+var Organization = {
     id: "deptTable",
     table: null,
     layerIndex: -1
@@ -133,12 +133,12 @@ var Dept = {
 /**
  * 初始化表格的列
  */
-Dept.initColumn = function () {
+Organization.initColumn = function () {
     var columns = [
         {field: 'selectItem', radio: true},
-        {title: '部门ID', field: 'deptId', visible: false, align: 'center', valign: 'middle', width: '80px'},
+        {title: '部门ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '80px'},
         {title: '部门名称', field: 'name', align: 'center', valign: 'middle', sortable: true, width: '180px'},
-        {title: '上级部门', field: 'parentName', align: 'center', valign: 'middle', sortable: true, width: '100px'},
+        {title: '上级部门', field: 'parentId', align: 'center', valign: 'middle', sortable: true, width: '100px'},
         {title: '排序号', field: 'orderNum', align: 'center', valign: 'middle', sortable: true, width: '100px'}]
     return columns;
 };
@@ -156,16 +156,16 @@ function getDeptId () {
 
 
 $(function () {
-    $.get(baseURL + "sys/dept/info", function(r){
-        var colunms = Dept.initColumn();
-        var table = new TreeTable(Dept.id, baseURL + "sys/dept/list", colunms);
-        table.setRootCodeValue(r.deptId);
+    $.get(baseURL + "sys/organization/info", function(r){
+        var colunms = Organization.initColumn();
+        var table = new TreeTable(Organization.id, baseURL + "sys/organization/list", colunms);
+        table.setRootCodeValue(r.orgId);
         table.setExpandColumn(2);
-        table.setIdField("deptId");
-        table.setCodeField("deptId");
+        table.setIdField("id");
+        table.setCodeField("id");
         table.setParentCodeField("parentId");
         table.setExpandAll(false);
         table.init();
-        Dept.table = table;
+        Organization.table = table;
     });
 });

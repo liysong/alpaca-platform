@@ -5,6 +5,7 @@ $(function () {
         colModel: [			
 			{ label: '用户ID', name: 'id', index: "user_id", width: 45, key: true },
 			{ label: '用户名', name: 'name', width: 75 },
+            { label: '用户名', name: 'loginName', width: 75 },
             { label: '所属部门', name: 'orgName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 80 },
@@ -145,7 +146,7 @@ var vm = new Vue({
                 contentType: "application/json",
 			    data: JSON.stringify(vm.user),
 			    success: function(r){
-			    	if(r.code === 0){
+			    	if(r.code === 1){
 						alert('操作成功', function(){
 							vm.reload();
 						});

@@ -30,6 +30,7 @@
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
+
 		<div class="grid-btn">
 			<a v-if="hasPermission('sys:dept:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 			<a v-if="hasPermission('sys:dept:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
@@ -79,6 +80,6 @@
 	<ul id="deptTree" class="ztree"></ul>
 </div>
 
-<script src="../../js/modules/sys/dept.js"></script>
+<script src="../../js/modules/sys/organization.js"></script>
 </body>
 </html>

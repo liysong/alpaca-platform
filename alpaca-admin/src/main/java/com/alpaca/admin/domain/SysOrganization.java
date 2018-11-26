@@ -1,9 +1,9 @@
 package com.alpaca.admin.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -73,7 +73,7 @@ public class SysOrganization implements Serializable {
      * 创建时间
      */
     @TableField("CREATE_TIME")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 机构单位层级1:顶级部门，2:子级部门
@@ -162,11 +162,11 @@ public class SysOrganization implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
     public Integer getOrgLevel() {

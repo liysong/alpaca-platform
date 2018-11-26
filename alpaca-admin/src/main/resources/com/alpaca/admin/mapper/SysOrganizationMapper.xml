@@ -25,4 +25,38 @@
         ID, DESCRIPTION, ORG_LAYER, ORG_NAME, ORG_SORT, ORG_OWNER, CREATE_USER, PARENT_ID, STATUS, CREATE_TIME, ORG_LEVEL, ORG_CODE, FLAG, ORG_TYPE
     </sql>
 
+    <select id="queryOrgIdList" resultType="string">
+        select  id  from  SYS_ORGANIZATION s  where  s.PARENT_ID #{id}
+    </select>
+
+    <select id="queryPage" resultType="com.alpaca.admin.domain.SysOrganization">
+        select
+          <include refid="Base_Column_List"/>
+         from  SYS_ORGANIZATION s
+        where s.flag = 1
+        <if test="orgName != null and orgName != ''">
+            s.ORG_NAME  like  '%'|| #{orgName}||'%'
+        </if>
+        <if test="orgCode !='' and orgCode != null ">
+            and s.ORG_CODE like  '%'|| #{orgCode}||'%'
+        </if>
+    </select>
+
+    <select id="queryList" resultType="com.alpaca.admin.domain.SysOrganization">
+        select
+        <include refid="Base_Column_List"/>
+        from  SYS_ORGANIZATION s
+        where s.flag = 1
+        <if test="orgName != null and orgName != ''">
+            s.ORG_NAME  like  '%'|| #{orgName}||'%'
+        </if>
+        <if test="orgCode !='' and orgCode != null ">
+            and s.ORG_CODE like  '%'|| #{orgCode}||'%'
+        </if>
+
+        <if test="id !=null and id != '' ">
+            and s.PARENT_ID = #{id}
+        </if>
+    </select>
+
 </mapper>
