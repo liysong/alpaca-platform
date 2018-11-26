@@ -47,4 +47,21 @@
 		#{userId}
 	</update>
 
+    <select id="queryUserPage" resultType="com.alpaca.admin.domain.SysUser">
+
+        select   ID, LOGIN_NAME, PASSWORD, NAME, SEX, EMAIL, CREATE_USER, MOBILE, USER_TYPE,
+                  DESCRIPTION, FLAG, SALT, STATUS, CREATE_TIME, UPDATE_TIME, ORG_ID, ORG_PATH
+         from  sys_user u
+         where  u.flag = 1
+         <if test="userName !='' and userName != null ">
+             and (u.name like '%'||#{userName}||'%' or u.LOGIN_NAME  like '%'||#{userName}||'%')
+         </if>
+
+        <if test="status != '' and status != null">
+            and u.STATUS = #{status}
+        </if>
+
+
+    </select>
+
 </mapper>

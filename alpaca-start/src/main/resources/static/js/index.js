@@ -45,8 +45,6 @@ var vm = new Vue({
 	methods: {
 		getMenuList: function () {
 			$.getJSON(baseURL + "sys/menu/nav", function(r){
-				console.log(r.menuList);
-                console.log(r.permissions);
 				vm.menuList = r.menuList;
                 window.permissions = r.permissions;
 			});

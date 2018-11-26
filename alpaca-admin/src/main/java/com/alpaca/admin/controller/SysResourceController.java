@@ -39,4 +39,7 @@ public class SysResourceController extends BaseController {
         return ResponseMessage.ok().put("menuList", menuList).put("permissions", permissions);
     }
 
+
+
+
 }

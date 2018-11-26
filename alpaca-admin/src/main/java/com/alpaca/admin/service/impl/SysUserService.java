@@ -3,8 +3,12 @@ package com.alpaca.admin.service.impl;
 import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.mapper.SysUserMapper;
 import com.alpaca.admin.service.ISysUserService;
+import com.alpaca.admin.utils.CustomPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -33,4 +37,8 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
     }
 
 
+    @Override
+    public List<SysUser> queryUserPage(CustomPage<SysUser> page, String userName, Integer status) {
+        return baseMapper.queryUserPage(page,userName,status);
+    }
 }

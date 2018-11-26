@@ -6,14 +6,19 @@ import com.alpaca.admin.domain.SysUserRole;
 import com.alpaca.admin.service.ISysUserRoleService;
 import com.alpaca.admin.service.ISysUserService;
 import com.alpaca.admin.shiro.ShiroUtils;
+import com.alpaca.admin.utils.CustomPage;
+import com.alpaca.common.page.PageUtils;
 import com.alpaca.common.state.DataState;
 import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.util.IdGenerator;
 import com.alpaca.common.util.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +26,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -145,6 +151,25 @@ public class SysUserController extends BaseController {
     @RequestMapping("/info")
     public ResponseMessage info(){
         return ResponseMessage.ok().put("user", getUser());
+    }
+
+
+    /**
+     * 所有用户列表
+     */
+    @RequestMapping("/list")
+    @RequiresPermissions("sys:user:list")
+    public ResponseMessage list(@RequestParam Map<String, Object> params){
+        //查询列表数据
+        PageUtils pageUtil = new PageUtils(params);
+
+        //获取map参数
+        CustomPage<SysUser> page = new CustomPage<>(pageUtil.getPage(),pageUtil.getLimit());
+
+        List<SysUser> list= sysUserService.queryUserPage(page,null,1);
+
+        page.setRecords(list);
+        return ResponseMessage.ok().put("page", page);
     }
 
 

@@ -3,9 +3,9 @@ $(function () {
         url: baseURL + 'sys/user/list',
         datatype: "json",
         colModel: [			
-			{ label: '用户ID', name: 'userId', index: "user_id", width: 45, key: true },
-			{ label: '用户名', name: 'username', width: 75 },
-            { label: '所属部门', name: 'deptName', width: 75 },
+			{ label: '用户ID', name: 'id', index: "user_id", width: 45, key: true },
+			{ label: '用户名', name: 'name', width: 75 },
+            { label: '所属部门', name: 'orgName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 80 },
 			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
@@ -25,10 +25,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
+            root: "page.records",
             page: "page.currPage",
             total: "page.totalPage",
-            records: "page.totalCount"
+            records: "page.total"
         },
         prmNames : {
             page:"page", 
@@ -193,7 +193,7 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                postData:{'username': vm.q.username},
+                postData:{'userName': vm.q.username},
                 page:page
             }).trigger("reloadGrid");
 		}
