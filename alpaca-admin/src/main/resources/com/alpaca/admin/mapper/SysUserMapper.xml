@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpaca.admin.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.alpaca.admin.domain.SysUser">
+        <result column="ID" property="id" />
+        <result column="LOGIN_NAME" property="loginName" />
+        <result column="PASSWORD" property="password" />
+        <result column="NAME" property="name" />
+        <result column="SEX" property="sex" />
+        <result column="EMAIL" property="email" />
+        <result column="CREATE_USER" property="createUser" />
+        <result column="MOBILE" property="mobile" />
+        <result column="USER_TYPE" property="userType" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="FLAG" property="flag" />
+        <result column="SALT" property="salt" />
+        <result column="STATUS" property="status" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="ORG_ID" property="orgId" />
+        <result column="ORG_PATH" property="orgPath" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, LOGIN_NAME, PASSWORD, NAME, SEX, EMAIL, CREATE_USER, MOBILE, USER_TYPE,
+        DESCRIPTION, FLAG, SALT, STATUS, CREATE_TIME, UPDATE_TIME, ORG_ID, ORG_PATH
+    </sql>
+
+    <select id="querySysUserByLoginName" resultType="com.alpaca.admin.domain.SysUser">
+
+        select   ID, LOGIN_NAME, PASSWORD, NAME, SEX, EMAIL, CREATE_USER, MOBILE, USER_TYPE,
+             DESCRIPTION, FLAG, SALT, STATUS, CREATE_TIME, UPDATE_TIME, ORG_ID, ORG_PATH
+        from  Sys_user s where s.login_name = #{loginName}
+
+    </select>
+
+    <update id="setStatus">
+		update sys_user set status = #{status} where id =
+		#{userId}
+	</update>
+
+    <update id="changePwd">
+		update sys_user set password = #{pwd} where id =
+		#{userId}
+	</update>
+
+</mapper>

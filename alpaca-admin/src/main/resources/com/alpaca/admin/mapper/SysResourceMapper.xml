@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpaca.admin.mapper.SysResourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.alpaca.admin.domain.SysResource">
+        <result column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="PERMISSION_CODE" property="permissionCode" />
+        <result column="TYPE" property="type" />
+        <result column="URL" property="url" />
+        <result column="MENU_ICON" property="menuIcon" />
+        <result column="SORT" property="sort" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="FLAG" property="flag" />
+        <result column="STATUS" property="status" />
+        <result column="IS_ROOT" property="isRoot" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, NAME, PARENT_ID, PERMISSION_CODE, TYPE, URI, MENU_ICON, SORT, DESCRIPTION, FLAG, STATUS, IS_ROOT
+    </sql>
+    <select id="queryAllPermissionCodesByUserId" resultType="string">
+        select   r.permission_code   from  sys_resource r
+          left join  sys_role_resource  rr on  rr.resource_id = r.id  and  r.type = '2'
+          left join  sys_role  ro  on  ro.id = rr.role_id
+          left join  sys_user_role ur on  ur.role_id = ro.id
+          left join  sys_user u on u.id =  ur.user_id
+          where  u.id = #{userId} and u.flag = 1
+    </select>
+
+    <select id="queryAllSysResourceByUserId" resultType="com.alpaca.admin.domain.SysResource">
+          select  res.ID,
+                   res.NAME,
+                   res.PARENT_ID,
+                   res.PERMISSION_CODE,
+                   res.TYPE,
+                   res.URL ,
+                   res.MENU_ICON,
+                   res.SORT,
+                   res.FLAG,
+                   res.STATUS,
+                   res.IS_ROOT   from  sys_resource res
+
+                  where   res.type  <![CDATA[ <> '2' ]]>   and res.flag = 1
+    </select>
+
+    <!--<select id="queryAllSysResourceByUserId" resultType="com.alpaca.admin.domain.SysResource">
+          select  res.ID,
+                   res.NAME,
+                   res.PARENT_ID,
+                   res.PERMISSION_CODE,
+                   res.TYPE,
+                   res.URl,
+                   res.MENU_ICON,
+                   res.SORT,
+                   res.FLAG,
+                   res.STATUS,
+                   res.IS_ROOT   from  sys_resource res
+          left join  sys_role_resource  rr on  rr.resource_id = res.id  and  res.type = '1'
+          left join  sys_role  ro  on  ro.id = rr.role_id
+          left join  sys_user_role ur on  ur.role_id = ro.id
+          left join  sys_user u on u.id =  ur.user_id
+          where  u.id = #{userId} and u.flag = 1
+    </select>-->
+
+</mapper>

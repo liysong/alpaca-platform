@@ -1,0 +1,28 @@
+#spring config
+spring:
+    profiles:
+        active: ora
+
+    resources:
+      static-locations: classpath:/static/,classpath:/views/
+mybatis:
+    mapperLocations: classpath*:com/alpaca/*/mapper/*.xml
+    typeAliasesPackage: com.alpaca
+    config-location: classpath:config/mybatis-config.xml
+mybatis-plus:
+    dbType: oracle
+     # ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID") ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
+    idType: 2
+
+platform:
+     platformName: 基础配置
+     #是否开启登录时验证码 (true/false)
+     kaptcha-open: false
+     #是否开启spring session,如果是多机环境需要开启(true/false)
+     spring-session-open: false
+     # session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：秒
+     session-invalidate-time: 1800
+     #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+     session-validation-interval: 300
+     # 是否开启swagger (true/false) ，开发阶段建议开启，正式环境关闭
+     swagger-open: true

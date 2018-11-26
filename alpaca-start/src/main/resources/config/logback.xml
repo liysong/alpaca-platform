@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 控制台输出日志 -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} > %-5level %logger{35} - %m%n</pattern>
+            <!--<charset>GBK</charset>-->
+        </encoder>
+    </appender>
+    <property name="LOG_HOME" value="d:/qc/logs" />
+
+    <!-- 日志输出 到文件-->
+    <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>270</maxHistory><!--日志最大保存时间-->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} > %-5level %logger{35} - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILEINFO"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/engine_%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>270</maxHistory><!--日志最大保存时间-->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} > %-5level %logger{35} - %m%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.springframework.web" level="ERROR"/>
+    <logger name="org.apache.tomcat" level="ERROR"/>
+    <logger name="com.bonait.executor" level="INFO"/>
+    <!--<logger name="org.apache.ibatis" level="INFO" />-->
+    <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" level="ERROR"/>
+    <logger name="org.apache.ibatis.io.ResolverUtil" level="ERROR"/>
+    <logger name="springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator" level="ERROR"/>
+
+    <logger name="com.bonait.engine" level="DEBUG">
+        <appender-ref ref="FILEINFO"></appender-ref>
+    </logger>
+
+    <logger name="com.bonait.strategy.mapper" level="DEBUG"/>
+
+    <!--
+        <logger name="com.bonait" level="DEBUG" />
+    -->
+    <!--<logger name="org.activiti" level="ERROR" />-->
+    <logger name="org.apache.commons.beanutils.PropertyUtils" level="OFF"/>
+    <!--<logger name="org.activiti.engine.impl" level="DEBUG" />-->
+    <!-- <root level="DEBUG"> -->
+
+    <root level="DEBUG">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="File"/>
+    </root>
+</configuration>

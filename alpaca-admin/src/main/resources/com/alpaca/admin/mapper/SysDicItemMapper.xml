@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpaca.admin.mapper.SysDicItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.alpaca.admin.domain.SysDicItem">
+        <result column="ID" property="id" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="GROUP_CODE" property="groupCode" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="NAME" property="name" />
+        <result column="VALUE" property="value" />
+        <result column="LOGO" property="logo" />
+        <result column="COLOUR" property="colour" />
+        <result column="DESCRIPTION" property="description" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, UPDATE_TIME, GROUP_CODE, PARENT_ID, NAME, VALUE, LOGO, COLOUR, DESCRIPTION
+    </sql>
+
+</mapper>
