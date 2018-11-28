@@ -23,4 +23,11 @@ public interface ISysRoleService extends IService<SysRole> {
 
     public List<SysRole> queryPage(CustomPage<SysRole> page, String name);
 
+    /**
+     * 查询用户所拥有的角色
+     * @param userId
+     * @return
+     */
+    List<SysRole> queryUserRole(String userId);
+
 }

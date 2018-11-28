@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -117,6 +118,14 @@ public class SysUser implements Serializable {
      */
     @TableField("ORG_PATH")
     private String orgPath;
+
+    @TableField(exist = false)
+    private List<String> roleIdList;
+
+
+    @TableField(exist = false)
+    private String orgName;
+
 
     public String getId() {
         return id;
@@ -252,6 +261,28 @@ public class SysUser implements Serializable {
 
     public void setOrgPath(String orgPath) {
         this.orgPath = orgPath;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public List<String> getRoleIds() {
+        return roleIdList;
+    }
+
+
+
+    public List<String> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(List<String> roleIdList) {
+        this.roleIdList = roleIdList;
     }
 
     @Override

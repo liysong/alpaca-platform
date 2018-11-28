@@ -71,6 +71,11 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
         return baseMapper.queryPage(page,name);
     }
 
+    @Override
+    public List<SysRole> queryUserRole(String userId) {
+        return baseMapper.queryUserRole(userId);
+    }
+
     private  List<SysRoleResource> getRoleResource(List<String> list , String roleId){
         if(list !=null && list.size() >0 ){
             List<SysRoleResource> sysRoleResourceList = new ArrayList<>();

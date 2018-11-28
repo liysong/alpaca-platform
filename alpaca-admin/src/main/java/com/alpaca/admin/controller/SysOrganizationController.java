@@ -8,6 +8,7 @@ import com.alpaca.common.page.PageUtils;
 import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.system.SystemUser;
 import com.alpaca.common.util.IdGenerator;
+import com.alpaca.common.util.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -96,8 +97,7 @@ public class SysOrganizationController extends BaseController {
         if(params.get("orgCode") !=null){
             orgCode = params.get("orgCode").toString();
         }
-        List<SysOrganization> list= sysOrganizationService.queryList(orgName,orgCode,"1");
-
+        List<SysOrganization> list= sysOrganizationService.queryList(orgName,orgCode,getOrgId());
         return  list;
     }
    /* @RequestMapping("/list")
@@ -123,6 +123,18 @@ public class SysOrganizationController extends BaseController {
         page.setRecords(list);
         return ResponseMessage.ok().put("page", page);
     }*/
+
+    @RequestMapping("/tree")
+    //@RequiresPermissions("sys:user:list")
+    public   List<SysOrganization>  tree(String id){
+
+        if("".equals(id) || "null".equals(id)){
+            id = getOrgId();
+        }
+        List<SysOrganization> list= sysOrganizationService.queryOrganizationList(id);
+        return  list;
+    }
+
 
     /**
      * 上级部门Id(管理员则为0)

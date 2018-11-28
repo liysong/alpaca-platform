@@ -43,12 +43,14 @@ public class ResponseMessage extends HashMap<String, Object> {
 
     public static ResponseMessage ok(String msg) {
         ResponseMessage r = new ResponseMessage();
+        r.put("code", 1);
         r.put("msg", msg);
         return r;
     }
 
     public static ResponseMessage ok(Map<String, Object> map) {
         ResponseMessage r = new ResponseMessage();
+        r.put("code", 1);
         r.put("msg",SUCCESS_MSG);
         r.putAll(map);
         return r;

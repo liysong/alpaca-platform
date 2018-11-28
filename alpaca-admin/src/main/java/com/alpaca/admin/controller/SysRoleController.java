@@ -1,23 +1,19 @@
 package com.alpaca.admin.controller;
 
 
-import com.alpaca.admin.domain.SysResource;
+
 import com.alpaca.admin.domain.SysRole;
-import com.alpaca.admin.domain.SysRoleResource;
 import com.alpaca.admin.service.ISysRoleResourceService;
 import com.alpaca.admin.service.ISysRoleService;
 import com.alpaca.admin.utils.CustomPage;
 import com.alpaca.common.page.PageUtils;
 import com.alpaca.common.system.ResponseMessage;
-import com.alpaca.common.util.IdGenerator;
+import com.alpaca.common.system.SystemUser;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -40,18 +36,19 @@ public class SysRoleController extends BaseController{
 
     @RequestMapping("/save")
     public ResponseMessage save(@RequestBody SysRole sysRole){
-       sysRoleService.saveSysRole(sysRole);
-        return  ResponseMessage.ok();
+         if(sysRoleService.saveSysRole(sysRole)){
+             return  ResponseMessage.ok();
+         }
+        return  ResponseMessage.error();
 
     }
 
-
-
     @RequestMapping("/update")
     public ResponseMessage update(@RequestBody SysRole sysRole){
-
-        sysRoleService.updateSysRole(sysRole);
-        return  ResponseMessage.ok();
+         if( sysRoleService.updateSysRole(sysRole)){
+             return  ResponseMessage.ok();
+         }
+         return  ResponseMessage.error();
 
     }
 
@@ -60,6 +57,24 @@ public class SysRoleController extends BaseController{
 
         sysRoleService.removeById(id);
         return  ResponseMessage.ok();
+
+    }
+
+    /**
+     * 角色列表
+     */
+    @RequestMapping("/select")
+    @RequiresPermissions("sys:role:select")
+    public ResponseMessage select(){
+
+        //如果不是超级管理员，则只查询自己所拥有的角色列表
+        if(!SystemUser.ADMIN_ID.equals(getUserId()) ){
+            List<SysRole> list = sysRoleService.queryUserRole(getUserId());
+            return ResponseMessage.ok().put("list", list);
+        }else {
+            List<SysRole> list = sysRoleService.queryUserRole(null);
+            return ResponseMessage.ok().put("list", list);
+        }
 
     }
 

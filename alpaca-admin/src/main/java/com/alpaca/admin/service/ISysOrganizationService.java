@@ -22,4 +22,11 @@ public interface ISysOrganizationService extends IService<SysOrganization> {
 
     List<SysOrganization> queryList(String  name,String orgCode,String id);
 
+    /**
+     * 通过组织机构id，构造树形结构
+     * @param id
+     * @return
+     */
+    List<SysOrganization> queryOrganizationList(String id);
+
 }

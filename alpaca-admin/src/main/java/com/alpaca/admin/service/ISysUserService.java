@@ -30,5 +30,6 @@ public interface ISysUserService extends IService<SysUser> {
 
     List<SysUser> queryUserPage(CustomPage<SysUser> page, String userName, Integer status);
 
+    void  deleteBatchUser(String [] userIds);
 
 }

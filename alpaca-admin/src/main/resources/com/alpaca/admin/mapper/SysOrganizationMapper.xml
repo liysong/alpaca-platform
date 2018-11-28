@@ -64,4 +64,12 @@
         order by s.org_layer
     </select>
 
+
+    <select id="queryOrganizationList" resultType="com.alpaca.admin.domain.SysOrganization">
+         select
+           SO.ID,  SO.ORG_LAYER, SO.ORG_NAME,SO.PARENT_ID
+          from  sys_organization  so
+            start with id = #{id}  connect by prior id =  parent_id
+    </select>
+
 </mapper>

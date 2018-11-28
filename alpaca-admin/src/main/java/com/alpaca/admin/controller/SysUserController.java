@@ -1,8 +1,10 @@
 package com.alpaca.admin.controller;
 
 
+import com.alpaca.admin.domain.SysRole;
 import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.domain.SysUserRole;
+import com.alpaca.admin.service.ISysRoleService;
 import com.alpaca.admin.service.ISysUserRoleService;
 import com.alpaca.admin.service.ISysUserService;
 import com.alpaca.admin.shiro.ShiroUtils;
@@ -13,14 +15,12 @@ import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.util.IdGenerator;
 import com.alpaca.common.util.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.Map;
  * @since 2018-11-23
  */
 @RestController
-@RequestMapping("/sys/user/")
+@RequestMapping("/sys/user")
 public class SysUserController extends BaseController {
 
     @Autowired
@@ -46,12 +46,15 @@ public class SysUserController extends BaseController {
     @Autowired
     private ISysUserRoleService sysUserRoleService;
 
+    @Autowired
+    private ISysRoleService sysRoleService;
+
     /**
      * 添加管理员
      */
-    @RequestMapping("add")
+    @RequestMapping("/save")
   //  @OperationLog(operationType= OperateType.ADD,operationName="新增用户")
-    public ResponseMessage add(@Valid SysUser user, String[] roleIds) {
+    public ResponseMessage add(@RequestBody SysUser user) {
 
 
         // 判断账号是否重复
@@ -68,9 +71,11 @@ public class SysUserController extends BaseController {
         user.setPassword(ShiroUtils.md5(user.getPassword(), user.getSalt()));
         user.setStatus(DataState.ENABLE.getCode());
         user.setCreateTime(new Date());
+        user.setCreateUser(getUserId());
 
+        List<String> roleIds = user.getRoleIds();
         //获取角色id集合
-        if(roleIds !=null && roleIds.length >0){
+        if(roleIds !=null && roleIds.size() >0){
             List<SysUserRole> list = new ArrayList<>();
             for(String roleId: roleIds){
                 list.add(new SysUserRole(IdGenerator.getNextId(),user.getId(),roleId));
@@ -82,7 +87,7 @@ public class SysUserController extends BaseController {
     }
 
 
-    @RequestMapping("update")
+    @RequestMapping("/update")
    // @OperationLog(operationType= OperateType.UPDATE,operationName="更新用户")
     public ResponseMessage  update(@Valid SysUser sysUser){
 
@@ -94,15 +99,22 @@ public class SysUserController extends BaseController {
     }
 
 
-    @RequestMapping("delete")
+    @RequestMapping("/delete")
    // @OperationLog(operationType= OperateType.DELETE,operationName="删除用户")
     @ResponseBody
-    public ResponseMessage  delete(String id){
+    public ResponseMessage  delete(@RequestBody String[] userIds){
 
-        if(id !=null){
+        if(userIds !=null && userIds.length >0){
             //删除该用户下拥有的角色
+            if(ArrayUtils.contains(userIds, 1L)){
+                return ResponseMessage.error("系统管理员不能删除");
+            }
 
-            sysUserService.removeById(id);
+            if(ArrayUtils.contains(userIds, getUserId())){
+                return ResponseMessage.error("当前用户不能删除");
+            }
+
+            sysUserService.deleteBatchUser(userIds);
 
             return  ResponseMessage.ok();
         }
@@ -170,6 +182,27 @@ public class SysUserController extends BaseController {
 
         page.setRecords(list);
         return ResponseMessage.ok().put("page", page);
+    }
+
+    /**
+     * 角色信息
+     */
+    @RequestMapping("/info/{id}")
+    @RequiresPermissions("sys:user:info")
+    public ResponseMessage info(@PathVariable("id") String id){
+
+        SysUser sysUser = sysUserService.getById(id);
+        List<SysRole> sysRoles = sysRoleService.queryUserRole(id);
+        if(sysRoles  !=null ){
+            List<String> listRoleIds = new ArrayList<>();
+            for(SysRole role : sysRoles){
+                listRoleIds.add(role.getId());
+            }
+            sysUser.setRoleIdList(listRoleIds);
+        }
+
+
+        return ResponseMessage.ok().put("user", sysUser);
     }
 
 

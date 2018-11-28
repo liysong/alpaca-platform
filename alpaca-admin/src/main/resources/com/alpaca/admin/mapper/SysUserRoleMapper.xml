@@ -14,4 +14,8 @@
         USER_ID, ROLE_ID, ID
     </sql>
 
+    <delete id="deleteByUser">
+        delete  sys_user_role s where  s.user_id =#{userId}
+    </delete>
+
 </mapper>

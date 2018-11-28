@@ -34,4 +34,9 @@ public class SysOrganizationService extends ServiceImpl<SysOrganizationMapper, S
     public  List<SysOrganization> queryList(String name, String orgCode, String id) {
         return baseMapper.queryList(name,orgCode,id);
     }
+
+    @Override
+    public List<SysOrganization> queryOrganizationList(String id) {
+        return baseMapper.queryOrganizationList(id);
+    }
 }

@@ -17,6 +17,8 @@ import java.util.List;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
-    public List<SysRole> queryPage(CustomPage<SysRole> page,@Param("name") String name);
+    List<SysRole> queryPage(CustomPage<SysRole> page,@Param("name") String name);
+
+    List<SysRole> queryUserRole(String userId);
 
 }

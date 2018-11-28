@@ -47,12 +47,13 @@ var setting = {
     data: {
         simpleData: {
             enable: true,
-            idKey: "deptId",
+            idKey: "id",
             pIdKey: "parentId",
             rootPId: -1
         },
         key: {
-            url:"nourl"
+            url:"nourl",
+			name:"orgName"
         }
     }
 };
@@ -69,7 +70,8 @@ var vm = new Vue({
 		roleList:{},
 		user:{
 			status:1,
-			deptId:null,
+			id:null,
+
             deptName:null,
 			roleIdList:[]
 		}
@@ -82,7 +84,7 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.roleList = {};
-			vm.user = {deptName:null, deptId:null, status:1, roleIdList:[]};
+			vm.user = {orgName:null, orgId:null, status:1, roleIdList:[]};
 			
 			//获取角色信息
 			this.getRoleList();
@@ -91,13 +93,14 @@ var vm = new Vue({
 		},
         getDept: function(){
             //加载部门树
-            $.get(baseURL + "sys/dept/list", function(r){
+			var id = vm.user.orgId;
+            $.get(baseURL + "sys/organization/tree?id="+id, function(r){
                 ztree = $.fn.zTree.init($("#deptTree"), setting, r);
-                var node = ztree.getNodeByParam("deptId", vm.user.deptId);
+                var node = ztree.getNodeByParam("id", vm.user.orgId);
                 if(node != null){
                     ztree.selectNode(node);
-
-                    vm.user.deptName = node.name;
+                    vm.user.orgId = node.id
+                    vm.user.orgName = node.orgName;
 				}
             })
         },
@@ -127,7 +130,7 @@ var vm = new Vue({
                     contentType: "application/json",
 				    data: JSON.stringify(userIds),
 				    success: function(r){
-						if(r.code == 0){
+						if(r.code === 1){
 							alert('操作成功', function(){
                                 vm.reload();
 							});
@@ -140,6 +143,8 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function () {
 			var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+			//获取角色信息
+           // vm.user.roleIdList = vm.roleList;
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
@@ -148,6 +153,7 @@ var vm = new Vue({
 			    success: function(r){
 			    	if(r.code === 1){
 						alert('操作成功', function(){
+
 							vm.reload();
 						});
 					}else{
@@ -183,8 +189,8 @@ var vm = new Vue({
                 btn1: function (index) {
                     var node = ztree.getSelectedNodes();
                     //选择上级部门
-                    vm.user.deptId = node[0].deptId;
-                    vm.user.deptName = node[0].name;
+                    vm.user.orgId = node[0].id;
+                    vm.user.orgName = node[0].orgName;
 
                     layer.close(index);
                 }

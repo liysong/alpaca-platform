@@ -22,4 +22,6 @@ public interface SysOrganizationMapper extends BaseMapper<SysOrganization> {
     List<SysOrganization> queryPage(CustomPage<SysOrganization> page, @Param("orgName") String  orgName, @Param("orgCode")String orgCode);
 
     List<SysOrganization> queryList(@Param("orgName") String  orgName, @Param("orgCode")String orgCode ,@Param("id")String id);
+
+    List<SysOrganization> queryOrganizationList(String id);
 }
