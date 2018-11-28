@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysRoleResourceMapper extends BaseMapper<SysRoleResource> {
 
+    void  deleteByRoleId(String roleId);
 }

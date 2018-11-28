@@ -1,9 +1,10 @@
 package com.alpaca.admin.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -61,13 +62,16 @@ public class SysRole implements Serializable {
      * 创建时间
      */
     @TableField("CREATE_TIME")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
     @TableField("UPDATE_TIME")
-    private LocalDateTime updateTime;
+    private Date updateTime;
+
+    @TableField(exist = false)
+    private List<String>  resourceIds;
 
     public String getId() {
         return id;
@@ -118,19 +122,27 @@ public class SysRole implements Serializable {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    public LocalDateTime getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public List<String> getResourceIds() {
+        return resourceIds;
+    }
+
+    public void setResourceIds(List<String> resourceIds) {
+        this.resourceIds = resourceIds;
     }
 
     @Override

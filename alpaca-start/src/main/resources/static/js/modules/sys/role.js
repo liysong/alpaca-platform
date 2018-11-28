@@ -3,10 +3,15 @@ $(function () {
         url: baseURL + 'sys/role/list',
         datatype: "json",
         colModel: [			
-			{ label: '角色ID', name: 'roleId', index: "role_id", width: 45, key: true },
-			{ label: '角色名称', name: 'roleName', index: "role_name", width: 75 },
-            { label: '所属部门', name: 'deptName', width: 75 },
-			{ label: '备注', name: 'remark', width: 100 },
+			{ label: '角色ID', name: 'id', index: "role_id", width: 45, key: true },
+			{ label: '角色名称', name: 'name', index: "role_name", width: 75 },
+
+			{ label: '备注', name: 'description', width: 100 },
+            { label: '状态', name: 'status', width: 50 ,formatter: function(value, options, row){
+                    return value === 0 ?
+                        '<span class="label label-danger">禁用</span>' :
+                        '<span class="label label-success">正常</span>';
+            }},
 			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80}
         ],
 		viewrecords: true,
@@ -19,10 +24,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
+            root: "page.records",
             page: "page.currPage",
             total: "page.totalPage",
-            records: "page.totalCount"
+            records: "page.total"
         },
         prmNames : {
             page:"page", 
@@ -42,7 +47,7 @@ var menu_setting = {
 	data: {
 		simpleData: {
 			enable: true,
-			idKey: "menuId",
+			idKey: "id",
 			pIdKey: "parentId",
 			rootPId: -1
 		},
@@ -62,7 +67,7 @@ var dept_setting = {
     data: {
         simpleData: {
             enable: true,
-            idKey: "deptId",
+            idKey: "id",
             pIdKey: "parentId",
             rootPId: -1
         },
@@ -113,10 +118,11 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.role = {deptName:null, deptId:null};
+			vm.role = {menuName:null, menuId:null,};
 			vm.getMenuTree(null);
 
             vm.getDept();
+
 
             vm.getDataTree();
 		},
@@ -164,18 +170,10 @@ var vm = new Vue({
                 //勾选角色所拥有的菜单
     			var menuIds = vm.role.menuIdList;
     			for(var i=0; i<menuIds.length; i++) {
-    				var node = menu_ztree.getNodeByParam("menuId", menuIds[i]);
+    				var node = menu_ztree.getNodeByParam("id", menuIds[i]);
     				menu_ztree.checkNode(node, true, false);
     			}
 
-                //勾选角色所拥有的部门数据权限
-                var deptIds = vm.role.deptIdList;
-                for(var i=0; i<deptIds.length; i++) {
-                    var node = data_ztree.getNodeByParam("deptId", deptIds[i]);
-                    data_ztree.checkNode(node, true, false);
-                }
-
-                vm.getDept();
     		});
 		},
 		saveOrUpdate: function () {
@@ -183,7 +181,7 @@ var vm = new Vue({
 			var nodes = menu_ztree.getCheckedNodes(true);
 			var menuIdList = new Array();
 			for(var i=0; i<nodes.length; i++) {
-				menuIdList.push(nodes[i].menuId);
+				menuIdList.push(nodes[i].id);
 			}
 			vm.role.menuIdList = menuIdList;
 
@@ -224,17 +222,18 @@ var vm = new Vue({
 				}
 			});
 	    },
+
         getDataTree: function(roleId) {
             //加载菜单树
-            $.get(baseURL + "sys/dept/list", function(r){
+          /*  $.get(baseURL + "sys/dept/list", function(r){
                 data_ztree = $.fn.zTree.init($("#dataTree"), data_setting, r);
                 //展开所有节点
                 data_ztree.expandAll(true);
-            });
+            });*/
         },
         getDept: function(){
             //加载部门树
-            $.get(baseURL + "sys/dept/list", function(r){
+           /* $.get(baseURL + "sys/dept/list", function(r){
                 dept_ztree = $.fn.zTree.init($("#deptTree"), dept_setting, r);
                 var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
                 if(node != null){
@@ -242,7 +241,7 @@ var vm = new Vue({
 
                     vm.role.deptName = node.name;
                 }
-            })
+            })*/
         },
         deptTree: function(){
             layer.open({

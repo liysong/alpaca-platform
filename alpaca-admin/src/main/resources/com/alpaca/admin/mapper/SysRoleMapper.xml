@@ -20,4 +20,14 @@
         ID, NAME, ROLE_CODE, ROLE_TYPE, STATUS, DESCRIPTION, FLAG, CREATE_TIME, UPDATE_TIME
     </sql>
 
+    <select id="queryPage" resultType="com.alpaca.admin.domain.SysRole">
+        select
+          <include refid="Base_Column_List"/>
+        from  sys_role s
+        where s.flag = 1
+        <if test="name !='' and name != null">
+            and s.name like '%'|| #{name} || '%'
+        </if>
+    </select>
+
 </mapper>

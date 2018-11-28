@@ -14,4 +14,8 @@
         ID, ROLE_ID, RESOURCE_ID
     </sql>
 
+    <delete id="deleteByRoleId">
+        delete SYS_ROLE_RESOURCE s where s.role_id = #{roleId}
+    </delete>
+
 </mapper>

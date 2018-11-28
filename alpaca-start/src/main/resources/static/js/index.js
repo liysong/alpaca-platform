@@ -5,7 +5,7 @@ var menuItem = Vue.extend({
 	template:[
 	          '<li :class="{active: (item.type===0 && index === 0)}">',
 				  '<a v-if="item.type === 0" href="javascript:;">',
-					  '<i v-if="item.icon != null" :class="item.icon"></i>',
+					  '<i v-if="item.menuIcon != null" :class="item.menuIcon"></i>',
 					  '<span>{{item.name}}</span>',
 					  '<i class="fa fa-angle-left pull-right"></i>',
 				  '</a>',
@@ -13,7 +13,7 @@ var menuItem = Vue.extend({
 					  '<menu-item :item="item" :index="index" v-for="(item, index) in item.list"></menu-item>',
 				  '</ul>',
 				  '<a v-if="item.type === 1" :href="\'#\'+item.url">' +
-					  '<i v-if="item.icon != null" :class="item.icon"></i>' +
+					  '<i v-if="item.menuIcon != null" :class="item.menuIcon"></i>' +
 					  '<i v-else class="fa fa-circle-o"></i> {{item.name}}' +
 				  '</a>',
 	          '</li>'

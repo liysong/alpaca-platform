@@ -2,7 +2,7 @@ var setting = {
     data: {
         simpleData: {
             enable: true,
-            idKey: "menuId",
+            idKey: "id",
             pIdKey: "parentId",
             rootPId: -1
         },
@@ -30,7 +30,7 @@ var vm = new Vue({
             //加载菜单树
             $.get(baseURL + "sys/menu/select", function(r){
                 ztree = $.fn.zTree.init($("#menuTree"), setting, r.menuList);
-                var node = ztree.getNodeByParam("menuId", vm.menu.parentId);
+                var node = ztree.getNodeByParam("id", vm.menu.parentId);
                 ztree.selectNode(node);
 
                 vm.menu.parentName = node.name;
@@ -68,7 +68,7 @@ var vm = new Vue({
                     url: baseURL + "sys/menu/delete",
                     data: "menuId=" + menuId,
                     success: function(r){
-                        if(r.code === 0){
+                        if(r.code === 1){
                             alert('操作成功', function(){
                                 vm.reload();
                             });
@@ -87,7 +87,7 @@ var vm = new Vue({
                 contentType: "application/json",
                 data: JSON.stringify(vm.menu),
                 success: function(r){
-                    if(r.code === 0){
+                    if(r.code === 1){
                         alert('操作成功', function(){
                             vm.reload();
                         });
@@ -138,11 +138,11 @@ var Menu = {
 Menu.initColumn = function () {
     var columns = [
         {field: 'selectItem', radio: true},
-        {title: '菜单ID', field: 'menuId', visible: false, align: 'center', valign: 'middle', width: '80px'},
+        {title: '菜单ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '80px'},
         {title: '菜单名称', field: 'name', align: 'center', valign: 'middle', sortable: true, width: '180px'},
         {title: '上级菜单', field: 'parentName', align: 'center', valign: 'middle', sortable: true, width: '100px'},
-        {title: '图标', field: 'icon', align: 'center', valign: 'middle', sortable: true, width: '80px', formatter: function(item, index){
-            return item.icon == null ? '' : '<i class="'+item.icon+' fa-lg"></i>';
+        {title: '图标', field: 'menuIcon', align: 'center', valign: 'middle', sortable: true, width: '80px', formatter: function(item, index){
+            return item.menuIcon == null ? '' : '<i class="'+item.menuIcon+' fa-lg"></i>';
         }},
         {title: '类型', field: 'type', align: 'center', valign: 'middle', sortable: true, width: '100px', formatter: function(item, index){
             if(item.type === 0){
@@ -155,9 +155,9 @@ Menu.initColumn = function () {
                 return '<span class="label label-warning">按钮</span>';
             }
         }},
-        {title: '排序号', field: 'orderNum', align: 'center', valign: 'middle', sortable: true, width: '100px'},
+        {title: '排序号', field: 'sort', align: 'center', valign: 'middle', sortable: true, width: '100px'},
         {title: '菜单URL', field: 'url', align: 'center', valign: 'middle', sortable: true, width: '160px'},
-        {title: '授权标识', field: 'perms', align: 'center', valign: 'middle', sortable: true}]
+        {title: '授权标识', field: 'permissionCode', align: 'center', valign: 'middle', sortable: true}]
     return columns;
 };
 
@@ -177,8 +177,8 @@ $(function () {
     var colunms = Menu.initColumn();
     var table = new TreeTable(Menu.id, baseURL + "sys/menu/list", colunms);
     table.setExpandColumn(2);
-    table.setIdField("menuId");
-    table.setCodeField("menuId");
+    table.setIdField("id");
+    table.setCodeField("id");
     table.setParentCodeField("parentId");
     table.setExpandAll(false);
     table.init();

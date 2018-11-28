@@ -7,7 +7,8 @@ var setting = {
             rootPId: -1
         },
         key: {
-            url:"nourl"
+            url:"nourl",
+            name:"orgName"
         }
     }
 };
@@ -21,7 +22,7 @@ var vm = new Vue({
         dept:{
             parentName:null,
             parentId:0,
-            orderNum:0
+            orgLayer:0
         }
     },
     methods: {
@@ -29,16 +30,18 @@ var vm = new Vue({
             //加载部门树
             $.get(baseURL + "sys/organization/select", function(r){
                 ztree = $.fn.zTree.init($("#deptTree"), setting, r.deptList);
-                var node = ztree.getNodeByParam("deptId", vm.dept.parentId);
+                var node = ztree.getNodeByParam("id", vm.dept.parentId);
                 ztree.selectNode(node);
 
-                vm.dept.parentName = node.name;
+                vm.dept.parentName = node.orgName;
             })
         },
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.dept = {parentName:null,parentId:0,orderNum:0};
+            vm.dept = {parentName:null,parentId:0,orgSort:0,orgName:null,
+                       orgLayer:null,orgCode:null,description:null,parentId:null,
+                       status:1,flag:1};
             vm.getDept();
         },
         update: function () {
@@ -65,7 +68,7 @@ var vm = new Vue({
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/organization/delete",
-                    data: "deptId=" + deptId,
+                    data: "id=" + deptId,
                     success: function(r){
                         if(r.code === 1){
                             alert('操作成功', function(){
@@ -79,14 +82,14 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function (event) {
-            var url = vm.dept.deptId == null ? "sys/dept/save" : "sys/dept/update";
+            var url = vm.dept.deptId == null ? "sys/organization/save" : "sys/organization/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
                 contentType: "application/json",
                 data: JSON.stringify(vm.dept),
                 success: function(r){
-                    if(r.code === 0){
+                    if(r.code === 1){
                         alert('操作成功', function(){
                             vm.reload();
                         });
@@ -110,8 +113,8 @@ var vm = new Vue({
                 btn1: function (index) {
                     var node = ztree.getSelectedNodes();
                     //选择上级部门
-                    vm.dept.parentId = node[0].deptId;
-                    vm.dept.parentName = node[0].name;
+                    vm.dept.parentId = node[0].id;
+                    vm.dept.parentName = node[0].orgName;
 
                     layer.close(index);
                 }
@@ -137,9 +140,9 @@ Organization.initColumn = function () {
     var columns = [
         {field: 'selectItem', radio: true},
         {title: '部门ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '80px'},
-        {title: '部门名称', field: 'name', align: 'center', valign: 'middle', sortable: true, width: '180px'},
-        {title: '上级部门', field: 'parentId', align: 'center', valign: 'middle', sortable: true, width: '100px'},
-        {title: '排序号', field: 'orderNum', align: 'center', valign: 'middle', sortable: true, width: '100px'}]
+        {title: '部门名称', field: 'orgName', align: 'center', valign: 'middle', sortable: true, width: '180px'},
+        {title: '上级部门', field: 'parentName', align: 'center', valign: 'middle', sortable: true, width: '100px'},
+        {title: 'layer', field: 'orgLayer', align: 'center', valign: 'middle', sortable: true, width: '100px'}]
     return columns;
 };
 

@@ -99,6 +99,9 @@ public class SysOrganization implements Serializable {
     @TableField("ORG_TYPE")
     private String orgType;
 
+    @TableField(exist = false)
+    private String  parentName;
+
     public String getId() {
         return id;
     }
@@ -196,6 +199,14 @@ public class SysOrganization implements Serializable {
 
     public void setOrgType(String orgType) {
         this.orgType = orgType;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     @Override

@@ -32,6 +32,16 @@ public class SysRoleResource implements Serializable {
     @TableField("RESOURCE_ID")
     private String resourceId;
 
+
+    public SysRoleResource(String id, String roleId, String resourceId) {
+        this.id = id;
+        this.roleId = roleId;
+        this.resourceId = resourceId;
+    }
+
+    public SysRoleResource() {
+    }
+
     public String getId() {
         return id;
     }

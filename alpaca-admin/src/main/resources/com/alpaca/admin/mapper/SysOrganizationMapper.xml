@@ -31,7 +31,7 @@
 
     <select id="queryPage" resultType="com.alpaca.admin.domain.SysOrganization">
         select
-          <include refid="Base_Column_List"/>
+        s.ID,  s.ORG_LAYER, s.ORG_NAME, s.ORG_SORT, s.ORG_OWNER, s.CREATE_USER, s.PARENT_ID, s.STATUS, s.ORG_LEVEL, s.ORG_CODE, s.ORG_TYPE
          from  SYS_ORGANIZATION s
         where s.flag = 1
         <if test="orgName != null and orgName != ''">
@@ -44,8 +44,11 @@
 
     <select id="queryList" resultType="com.alpaca.admin.domain.SysOrganization">
         select
-        <include refid="Base_Column_List"/>
+        s.ID,  s.ORG_LAYER, s.ORG_NAME, s.ORG_SORT, s.ORG_OWNER, s.CREATE_USER,
+        s.PARENT_ID, s.STATUS, s.ORG_LEVEL, s.ORG_CODE, s.ORG_TYPE,
+        so.org_name as  parentName
         from  SYS_ORGANIZATION s
+        left join   SYS_ORGANIZATION so on s.parent_id = so.id
         where s.flag = 1
         <if test="orgName != null and orgName != ''">
             s.ORG_NAME  like  '%'|| #{orgName}||'%'
@@ -57,6 +60,8 @@
         <if test="id !=null and id != '' ">
             and s.PARENT_ID = #{id}
         </if>
+
+        order by s.org_layer
     </select>
 
 </mapper>

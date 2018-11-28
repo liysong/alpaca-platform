@@ -10,14 +10,12 @@ import com.alpaca.common.system.SystemUser;
 import com.alpaca.common.util.IdGenerator;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +84,7 @@ public class SysOrganizationController extends BaseController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("sys:user:list")
-    public ResponseMessage list(@RequestParam Map<String, Object> params){
+    public   List<SysOrganization>  list(@RequestParam Map<String, Object> params){
 
 
         String orgName = null;
@@ -98,9 +96,9 @@ public class SysOrganizationController extends BaseController {
         if(params.get("orgCode") !=null){
             orgCode = params.get("orgCode").toString();
         }
-        List<SysOrganization> list= sysOrganizationService.queryList(orgName,orgCode,null);
+        List<SysOrganization> list= sysOrganizationService.queryList(orgName,orgCode,"1");
 
-        return ResponseMessage.ok(list);
+        return  list;
     }
    /* @RequestMapping("/list")
     //@RequiresPermissions("sys:user:list")
@@ -139,6 +137,32 @@ public class SysOrganizationController extends BaseController {
         }
 
         return ResponseMessage.ok().put("orgId", getOrgId());
+    }
+
+    /**
+     * 信息
+     */
+    @RequestMapping("/info/{deptId}")
+    @RequiresPermissions("sys:dept:info")
+    public ResponseMessage info(@PathVariable("deptId") Long deptId){
+        SysOrganization dept = sysOrganizationService.getById(deptId);
+
+        return ResponseMessage.ok().put("dept", dept);
+    }
+
+
+    /**
+     * 选择部门(添加、修改菜单)
+     */
+    @RequestMapping("/select")
+    @RequiresPermissions("sys:dept:select")
+    public ResponseMessage select(){
+
+        List<SysOrganization> list= sysOrganizationService.queryList(null,null,getOrgId());
+
+       list.add(sysOrganizationService.getById(getOrgId()));
+
+        return ResponseMessage.ok().put("deptList", list);
     }
 
 
