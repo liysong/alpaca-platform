@@ -107,8 +107,12 @@ var vm = new Vue({
 		showList: true,
 		title:null,
 		role:{
-			deptId:null,
-            deptName:null
+			id:null,
+            name:null,
+            roleCode:null,
+            status:1,
+            description:null,
+			flag:1
 		}
 	},
 	methods: {
@@ -168,7 +172,7 @@ var vm = new Vue({
             	vm.role = r.role;
                 
                 //勾选角色所拥有的菜单
-    			var menuIds = vm.role.menuIdList;
+    			var menuIds = vm.role.resourceIds;
     			for(var i=0; i<menuIds.length; i++) {
     				var node = menu_ztree.getNodeByParam("id", menuIds[i]);
     				menu_ztree.checkNode(node, true, false);
@@ -183,17 +187,17 @@ var vm = new Vue({
 			for(var i=0; i<nodes.length; i++) {
 				menuIdList.push(nodes[i].id);
 			}
-			vm.role.menuIdList = menuIdList;
+			vm.role.resourceIds = menuIdList;
 
-            //获取选择的数据
+          /*  //获取选择的数据
             var nodes = data_ztree.getCheckedNodes(true);
             var deptIdList = new Array();
             for(var i=0; i<nodes.length; i++) {
                 deptIdList.push(nodes[i].deptId);
             }
-            vm.role.deptIdList = deptIdList;
+            vm.role.deptIdList = deptIdList;*/
 			
-			var url = vm.role.roleId == null ? "sys/role/save" : "sys/role/update";
+			var url = vm.role.id == null ? "sys/role/save" : "sys/role/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,

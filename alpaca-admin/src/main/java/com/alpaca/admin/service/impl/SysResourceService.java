@@ -32,6 +32,12 @@ public class SysResourceService extends ServiceImpl<SysResourceMapper, SysResour
        return   getTreeList( list);
     }
 
+
+    @Override
+    public List<SysResource> queryNotButtonList() {
+        return baseMapper.queryNotButtonList();
+    }
+
     private List<SysResource>  getTreeList(List<SysResource> list){
 
 

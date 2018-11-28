@@ -18,4 +18,8 @@
         delete SYS_ROLE_RESOURCE s where s.role_id = #{roleId}
     </delete>
 
+    <select id="queryResourceIds"   resultType="string">
+        select  distinct  s.RESOURCE_ID from  SYS_ROLE_RESOURCE s where s.role_id = #{roleId}
+    </select>
+
 </mapper>

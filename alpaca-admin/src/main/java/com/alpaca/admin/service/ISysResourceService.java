@@ -23,4 +23,10 @@ public interface ISysResourceService extends IService<SysResource> {
 
     List<SysResource> queryAllSysResourceByUserId(String uerId);
 
+    /**
+     * 查询无按钮菜单，构建在创建资源
+     * @return
+     */
+    List<SysResource> queryNotButtonList();
+
 }

@@ -44,7 +44,7 @@
                    res.STATUS,
                    res.IS_ROOT   from  sys_resource res
 
-                  where   res.type  <![CDATA[ <> '2' ]]>   and res.flag = 1
+                  where   res.type  <![CDATA[ <>  2 ]]>   and res.flag = 1
     </select>
 
     <!--<select id="queryAllSysResourceByUserId" resultType="com.alpaca.admin.domain.SysResource">
@@ -65,5 +65,21 @@
           left join  sys_user u on u.id =  ur.user_id
           where  u.id = #{userId} and u.flag = 1
     </select>-->
+
+    <select id="queryNotButtonList" resultType="com.alpaca.admin.domain.SysResource">
+          select  res.ID,
+                   res.NAME,
+                   res.PARENT_ID,
+                   res.PERMISSION_CODE,
+                   res.TYPE,
+                   res.URL ,
+                   res.MENU_ICON,
+                   res.SORT,
+                   res.FLAG,
+                   res.STATUS,
+                   res.IS_ROOT   from  sys_resource res
+
+                  where   res.type  <![CDATA[ <> 2 ]]>   and res.flag = 1
+    </select>
 
 </mapper>

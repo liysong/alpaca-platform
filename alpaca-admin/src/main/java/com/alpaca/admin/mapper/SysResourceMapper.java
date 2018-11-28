@@ -20,4 +20,10 @@ public interface SysResourceMapper extends BaseMapper<SysResource> {
 
     List<SysResource> queryAllSysResourceByUserId(String uerId);
 
+    /**
+     * 查询无按钮菜单
+     * @return
+     */
+    List<SysResource> queryNotButtonList();
+
 }

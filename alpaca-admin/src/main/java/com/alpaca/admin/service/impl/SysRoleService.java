@@ -6,6 +6,7 @@ import com.alpaca.admin.mapper.SysRoleMapper;
 import com.alpaca.admin.service.ISysRoleResourceService;
 import com.alpaca.admin.service.ISysRoleService;
 import com.alpaca.admin.utils.CustomPage;
+import com.alpaca.common.state.DataState;
 import com.alpaca.common.util.IdGenerator;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,12 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
         sysRole.setId(roleId);
         sysRole.setCreateTime(new Date());
         sysRole.setUpdateTime(new Date());
+        sysRole.setFlag(DataState.ENABLE.getCode());
 
         List<SysRoleResource> sysRoleResourceList = getRoleResource(sysRole.getResourceIds(),roleId);
         if(sysRoleResourceList !=null){
             sysRoleResourceService.saveBatch(sysRoleResourceList);
-            baseMapper.updateById(sysRole);
+            baseMapper.insert(sysRole);
             return  true;
         }
         return false;
@@ -49,7 +51,7 @@ public class SysRoleService extends ServiceImpl<SysRoleMapper, SysRole> implemen
     public boolean updateSysRole(SysRole sysRole) {
         String roleId = sysRole.getId();
         sysRole.setUpdateTime(new Date());
-
+        sysRole.setFlag(DataState.ENABLE.getCode());
         //删除旧的资源列表
         sysRoleResourceService.deleteByRoleId(roleId);
         List<SysRoleResource> sysRoleResourceList = getRoleResource(sysRole.getResourceIds(),roleId);

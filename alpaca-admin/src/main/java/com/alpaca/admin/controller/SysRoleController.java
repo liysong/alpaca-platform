@@ -1,6 +1,7 @@
 package com.alpaca.admin.controller;
 
 
+import com.alpaca.admin.domain.SysResource;
 import com.alpaca.admin.domain.SysRole;
 import com.alpaca.admin.domain.SysRoleResource;
 import com.alpaca.admin.service.ISysRoleResourceService;
@@ -9,11 +10,9 @@ import com.alpaca.admin.utils.CustomPage;
 import com.alpaca.common.page.PageUtils;
 import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.util.IdGenerator;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,11 +40,8 @@ public class SysRoleController extends BaseController{
 
     @RequestMapping("/save")
     public ResponseMessage save(@RequestBody SysRole sysRole){
-
-
-
+       sysRoleService.saveSysRole(sysRole);
         return  ResponseMessage.ok();
-
 
     }
 
@@ -54,30 +50,21 @@ public class SysRoleController extends BaseController{
     @RequestMapping("/update")
     public ResponseMessage update(@RequestBody SysRole sysRole){
 
-        String roleId = sysRole.getId();
-        sysRole.setCreateTime(new Date());
-        sysRole.setUpdateTime(new Date());
-
-        //删除旧的资源列表
-
-        List<String> list = sysRole.getResourceIds();
-        if(list !=null && list.size() >0 ){
-            List<SysRoleResource> sysRoleResourceList = new ArrayList<>();
-            for(String resourceId: list){
-                sysRoleResourceList.add(new SysRoleResource(IdGenerator.getNextId(),roleId,resourceId));
-            }
-            sysRoleResourceService.saveBatch(sysRoleResourceList);
-        }
-        sysRoleService.save(sysRole);
-
+        sysRoleService.updateSysRole(sysRole);
         return  ResponseMessage.ok();
 
     }
 
+    @RequestMapping("/delete")
+    public ResponseMessage update(@RequestBody String  id){
+
+        sysRoleService.removeById(id);
+        return  ResponseMessage.ok();
+
+    }
 
     @RequestMapping("/list")
     public ResponseMessage update(@RequestParam Map<String, Object> params){
-
         //查询列表数据
         PageUtils pageUtil = new PageUtils(params);
 
@@ -93,6 +80,21 @@ public class SysRoleController extends BaseController{
         page.setRecords(list);
         return ResponseMessage.ok().put("page", page);
 
+    }
+
+    /**
+     * 角色信息
+     */
+    @RequestMapping("/info/{roleId}")
+    @RequiresPermissions("sys:role:info")
+    public ResponseMessage info(@PathVariable("roleId") String roleId){
+        SysRole role = sysRoleService.getById(roleId);
+
+        //查询角色对应的菜单
+        List<String> menuIdList = sysRoleResourceService.queryResourceIds(roleId);
+        role.setResourceIds(menuIdList);
+
+        return ResponseMessage.ok().put("role", role);
     }
 
 

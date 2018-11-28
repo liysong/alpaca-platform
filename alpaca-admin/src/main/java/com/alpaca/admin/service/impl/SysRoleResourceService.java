@@ -6,6 +6,8 @@ import com.alpaca.admin.service.ISysRoleResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色-资源 服务实现类
@@ -20,5 +22,10 @@ public class SysRoleResourceService extends ServiceImpl<SysRoleResourceMapper, S
     @Override
     public void deleteByRoleId(String roleId) {
         baseMapper.deleteByRoleId(roleId);
+    }
+
+    @Override
+    public List<String> queryResourceIds(String roleId) {
+        return baseMapper.queryResourceIds(roleId);
     }
 }

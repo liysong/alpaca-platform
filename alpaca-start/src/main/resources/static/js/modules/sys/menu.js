@@ -18,29 +18,29 @@ var vm = new Vue({
     data:{
         showList: true,
         title: null,
-        menu:{
+        sysResource:{
             parentName:null,
             parentId:0,
             type:1,
-            orderNum:0
+            sort:0
         }
     },
     methods: {
-        getMenu: function(){
+        getSysResource: function(){
             //加载菜单树
             $.get(baseURL + "sys/menu/select", function(r){
                 ztree = $.fn.zTree.init($("#menuTree"), setting, r.menuList);
-                var node = ztree.getNodeByParam("id", vm.menu.parentId);
+                var node = ztree.getNodeByParam("id", vm.sysResource.parentId);
                 ztree.selectNode(node);
 
-                vm.menu.parentName = node.name;
+                vm.sysResource.parentName = node.name;
             })
         },
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.menu = {parentName:null,parentId:0,type:1,orderNum:0};
-            vm.getMenu();
+            vm.sysResource = {parentName:null,parentId:0,type:1,sort:0};
+            vm.getSysResource();
         },
         update: function () {
             var menuId = getMenuId();
@@ -51,9 +51,9 @@ var vm = new Vue({
             $.get(baseURL + "sys/menu/info/"+menuId, function(r){
                 vm.showList = false;
                 vm.title = "修改";
-                vm.menu = r.menu;
+                vm.sysResource = r.sysResource;
 
-                vm.getMenu();
+                vm.getSysResource();
             });
         },
         del: function () {
@@ -80,12 +80,12 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function (event) {
-            var url = vm.menu.menuId == null ? "sys/menu/save" : "sys/menu/update";
+            var url = vm.sysResource.id == null ? "sys/menu/save" : "sys/menu/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.menu),
+                data: JSON.stringify(vm.sysResource),
                 success: function(r){
                     if(r.code === 1){
                         alert('操作成功', function(){
@@ -111,8 +111,8 @@ var vm = new Vue({
                 btn1: function (index) {
                     var node = ztree.getSelectedNodes();
                     //选择上级菜单
-                    vm.menu.parentId = node[0].menuId;
-                    vm.menu.parentName = node[0].name;
+                    vm.sysResource.parentId = node[0].id;
+                    vm.sysResource.parentName = node[0].name;
 
                     layer.close(index);
                 }
@@ -120,13 +120,13 @@ var vm = new Vue({
         },
         reload: function () {
             vm.showList = true;
-            Menu.table.refresh();
+            SysResource.table.refresh();
         }
     }
 });
 
 
-var Menu = {
+var SysResource = {
     id: "menuTable",
     table: null,
     layerIndex: -1
@@ -135,7 +135,7 @@ var Menu = {
 /**
  * 初始化表格的列
  */
-Menu.initColumn = function () {
+SysResource.initColumn = function () {
     var columns = [
         {field: 'selectItem', radio: true},
         {title: '菜单ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '80px'},
@@ -174,13 +174,13 @@ function getMenuId () {
 
 
 $(function () {
-    var colunms = Menu.initColumn();
-    var table = new TreeTable(Menu.id, baseURL + "sys/menu/list", colunms);
+    var colunms = SysResource.initColumn();
+    var table = new TreeTable(SysResource.id, baseURL + "sys/menu/list", colunms);
     table.setExpandColumn(2);
     table.setIdField("id");
     table.setCodeField("id");
     table.setParentCodeField("parentId");
     table.setExpandAll(false);
     table.init();
-    Menu.table = table;
+    SysResource.table = table;
 });
