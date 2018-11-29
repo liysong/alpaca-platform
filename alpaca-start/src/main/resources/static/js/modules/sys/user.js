@@ -141,6 +141,7 @@ var vm = new Vue({
 				});
 			});
 		},
+
 		saveOrUpdate: function () {
 			var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
 			//获取角色信息

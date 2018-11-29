@@ -21,7 +21,7 @@ public class AlpacaPlatformApplication extends SpringBootServletInitializer {
       //  SpringApplication.run(AlpacaPlatformApplication.class, args);
         ApplicationContext ctx =  SpringApplication.run(AlpacaPlatformApplication.class, args);
 
-        String[] beanNames =  ctx.getBeanDefinitionNames();
+     /*   String[] beanNames =  ctx.getBeanDefinitionNames();
 
         System.out.println("所以beanNames个数："+beanNames.length+"----------");
 
@@ -30,7 +30,7 @@ public class AlpacaPlatformApplication extends SpringBootServletInitializer {
             System.out.println(bean);
 
         }
-        System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------");*/
     }
 
 

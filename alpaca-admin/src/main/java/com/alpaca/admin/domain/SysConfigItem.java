@@ -35,6 +35,7 @@ public class SysConfigItem implements Serializable {
     @TableField("DESCRIPTION")
     private String description;
 
+
     public String getId() {
         return id;
     }

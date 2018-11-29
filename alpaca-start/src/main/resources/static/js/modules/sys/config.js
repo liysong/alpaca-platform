@@ -3,10 +3,12 @@ $(function () {
         url: baseURL + 'sys/config/list',
         datatype: "json",
         colModel: [			
-			{ label: 'ID', name: 'id', width: 30, key: true },
-			{ label: '参数名', name: 'key', width: 60 },
-			{ label: '参数值', name: 'value', width: 100 },
-			{ label: '备注', name: 'remark', width: 80 }
+			{ label: 'ID', name: 'id', width: 30, key: true,hidden:true },
+            { label: '名称', name: 'name', width: 90 },
+            { label: '参数组', name: 'groupCode', width: 50 },
+			{ label: '参数名', name: 'code', width: 70 },
+			{ label: '参数值', name: 'value', width: 60 },
+			{ label: '备注', name: 'description', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -39,7 +41,8 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		q:{
-			key: null
+			name: null
+
 		},
 		showList: true,
 		title: null,
@@ -79,7 +82,7 @@ var vm = new Vue({
                     contentType: "application/json",
 				    data: JSON.stringify(ids),
 				    success: function(r){
-						if(r.code == 0){
+						if(r.code == 1){
 							alert('操作成功', function(){
 								vm.reload();
 							});
@@ -112,7 +115,7 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                postData:{'key': vm.q.key},
+                postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
 		}

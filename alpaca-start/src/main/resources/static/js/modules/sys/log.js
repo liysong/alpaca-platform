@@ -3,14 +3,14 @@ $(function () {
         url: baseURL + 'sys/log/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', width: 30, key: true },
-			{ label: '用户名', name: 'username', width: 50 }, 			
-			{ label: '用户操作', name: 'operation', width: 70 }, 			
-			{ label: '请求方法', name: 'method', width: 150 }, 			
-			{ label: '请求参数', name: 'params', width: 80 },
-            { label: '执行时长(毫秒)', name: 'time', width: 80 },
+			{ label: 'id', name: 'id', width: 30, key: true,hidden:true },
+			{ label: '用户名', name: 'userName', width: 50 },
+			{ label: '用户操作', name: 'name', width: 70 },
+			{ label: '请求方法', name: 'method', width: 80 },
+			{ label: '请求参数', name: 'params', width: 150 },
+            { label: '执行时长(毫秒)', name: 'totalTime', width: 30 },
 			{ label: 'IP地址', name: 'ip', width: 70 }, 			
-			{ label: '创建时间', name: 'createDate', width: 90 }			
+			{ label: '创建时间', name: 'createTime', width: 90 }
         ],
 		viewrecords: true,
         height: 385,
@@ -43,7 +43,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		q:{
-			key: null
+			name: null
 		},
 	},
 	methods: {
@@ -53,7 +53,7 @@ var vm = new Vue({
 		reload: function (event) {
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-				postData:{'key': vm.q.key},
+				postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
 		}

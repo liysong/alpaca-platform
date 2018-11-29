@@ -9,7 +9,7 @@ package com.alpaca.common.state;
  */
 public enum OperateType {
 
-    ADD(1),
+    SAVE(1),
     UPDATE(2),
     DELETE(3),
 

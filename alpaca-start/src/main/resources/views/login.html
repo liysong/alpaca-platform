@@ -32,14 +32,14 @@
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" v-model="username" placeholder="账号">
+        <input type="text" class="form-control"  v-model="username" placeholder="账号">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" v-model="password" placeholder="密码">
+        <input type="password" class="form-control"  v-model="password" placeholder="密码">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="form-group has-feedback">
+    <!--  <div class="form-group has-feedback">
           <input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
           <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
       </div>
@@ -47,7 +47,7 @@
           <img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
           &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" @click="refreshCode">点击刷新</a>
       </div>
-
+-->
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
@@ -75,8 +75,8 @@
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		username: '',
-		password: '',
+		username: 'admin',
+		password: 'admin',
         captcha: '',
 		error: false,
 		errorMsg: '',
@@ -88,19 +88,19 @@ var vm = new Vue({
 		}
 	},
 	methods: {
-        refreshCode: function(){
+      /*  refreshCode: function(){
             this.src = "captcha.jpg?t=" + $.now();
-        },
+        },*/
 		login: function () {
-            var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
+         //   var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
+            var data = "username="+vm.username+"&password="+vm.password;
 			$.ajax({
 				type: "POST",
 			    url: baseURL + "sys/login",
 			    data: data,
 			    dataType: "json",
 			    success: function(r){
-				    console.log(JSON.stringify(r));
-					if(r.code == 0){//登录成功
+					if(r.code === 1){//登录成功
                         localStorage.setItem("token", r.token);
                         parent.location.href ='index.html';
 					}else{

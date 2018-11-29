@@ -1,10 +1,12 @@
 package com.alpaca.admin.controller;
 
 
+import com.alpaca.admin.annotation.OperationLog;
 import com.alpaca.admin.domain.SysOrganization;
 import com.alpaca.admin.service.ISysOrganizationService;
 import com.alpaca.admin.utils.CustomPage;
 import com.alpaca.common.page.PageUtils;
+import com.alpaca.common.state.OperateType;
 import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.system.SystemUser;
 import com.alpaca.common.util.IdGenerator;
@@ -40,7 +42,8 @@ public class SysOrganizationController extends BaseController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("sys:dept:save")
+    @RequiresPermissions("sys:organization:save")
+    @OperationLog(operationType= OperateType.SAVE,operationName="新增资源")
     public ResponseMessage save(@RequestBody SysOrganization sysOrganization){
 
         sysOrganization.setCreateTime(new Date());
@@ -54,7 +57,7 @@ public class SysOrganizationController extends BaseController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("sys:dept:update")
+    @RequiresPermissions("sys:organization:update")
     public ResponseMessage update(@RequestBody  SysOrganization sysOrganization){
 
         sysOrganizationService.updateById(sysOrganization);
@@ -66,7 +69,7 @@ public class SysOrganizationController extends BaseController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("sys:dept:delete")
+    @RequiresPermissions("sys:organization:delete")
     public ResponseMessage delete(String  id){
         //判断是否有子部门
       List<String> orgList = sysOrganizationService.queryOrgIdList(id);
@@ -140,7 +143,7 @@ public class SysOrganizationController extends BaseController {
      * 上级部门Id(管理员则为0)
      */
     @RequestMapping("/info")
-    @RequiresPermissions("sys:dept:list")
+    @RequiresPermissions("sys:organization:list")
     public ResponseMessage info(){
         String orgId = "1";
         if(getUserId() != SystemUser.ADMIN_ID){
@@ -155,8 +158,8 @@ public class SysOrganizationController extends BaseController {
      * 信息
      */
     @RequestMapping("/info/{deptId}")
-    @RequiresPermissions("sys:dept:info")
-    public ResponseMessage info(@PathVariable("deptId") Long deptId){
+    @RequiresPermissions("sys:organization:info")
+    public ResponseMessage info(@PathVariable("deptId") String deptId){
         SysOrganization dept = sysOrganizationService.getById(deptId);
 
         return ResponseMessage.ok().put("dept", dept);
@@ -167,7 +170,7 @@ public class SysOrganizationController extends BaseController {
      * 选择部门(添加、修改菜单)
      */
     @RequestMapping("/select")
-    @RequiresPermissions("sys:dept:select")
+    @RequiresPermissions("sys:organization:select")
     public ResponseMessage select(){
 
         List<SysOrganization> list= sysOrganizationService.queryList(null,null,getOrgId());

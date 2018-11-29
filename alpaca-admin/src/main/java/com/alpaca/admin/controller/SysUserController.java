@@ -1,6 +1,7 @@
 package com.alpaca.admin.controller;
 
 
+import com.alpaca.admin.annotation.OperationLog;
 import com.alpaca.admin.domain.SysRole;
 import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.domain.SysUserRole;
@@ -11,6 +12,7 @@ import com.alpaca.admin.shiro.ShiroUtils;
 import com.alpaca.admin.utils.CustomPage;
 import com.alpaca.common.page.PageUtils;
 import com.alpaca.common.state.DataState;
+import com.alpaca.common.state.OperateType;
 import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.util.IdGenerator;
 import com.alpaca.common.util.StringUtils;
@@ -53,7 +55,7 @@ public class SysUserController extends BaseController {
      * 添加管理员
      */
     @RequestMapping("/save")
-  //  @OperationLog(operationType= OperateType.ADD,operationName="新增用户")
+    @OperationLog(operationType= OperateType.SAVE,operationName="新增用户")
     public ResponseMessage add(@RequestBody SysUser user) {
 
 
@@ -88,7 +90,7 @@ public class SysUserController extends BaseController {
 
 
     @RequestMapping("/update")
-   // @OperationLog(operationType= OperateType.UPDATE,operationName="更新用户")
+    @OperationLog(operationType= OperateType.UPDATE,operationName="更新用户")
     public ResponseMessage  update(@Valid SysUser sysUser){
 
         if(sysUser != null){
@@ -100,7 +102,7 @@ public class SysUserController extends BaseController {
 
 
     @RequestMapping("/delete")
-   // @OperationLog(operationType= OperateType.DELETE,operationName="删除用户")
+    @OperationLog(operationType= OperateType.DELETE,operationName="删除用户")
     @ResponseBody
     public ResponseMessage  delete(@RequestBody String[] userIds){
 
@@ -121,7 +123,7 @@ public class SysUserController extends BaseController {
         return  ResponseMessage.error();
     }
 
-  //  @OperationLog(operationType= OperateType.UPDATE,operationName="更改用户密码")
+    @OperationLog(operationType= OperateType.UPDATE,operationName="更改用户密码")
     @RequestMapping("/changePwd")
     public ResponseMessage changePwd(String oldPassword, String newPassword){
 
@@ -145,7 +147,7 @@ public class SysUserController extends BaseController {
     }
 
 
-   // @OperationLog(operationType= OperateType.UPDATE,operationName="改变用户状态")
+    @OperationLog(operationType= OperateType.UPDATE,operationName="改变用户状态")
     @RequestMapping("/changeStatus")
     @ResponseBody
     public ResponseMessage changeStatus(int status){
@@ -171,6 +173,7 @@ public class SysUserController extends BaseController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("sys:user:list")
+    @OperationLog(operationType= OperateType.QUERY,operationName="查询列表信息")
     public ResponseMessage list(@RequestParam Map<String, Object> params){
         //查询列表数据
         PageUtils pageUtil = new PageUtils(params);

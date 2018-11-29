@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ public class SysOperationLog implements Serializable {
     private String method;
 
     @TableField("CREATE_TIME")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField("IP")
     private String ip;
@@ -52,8 +53,10 @@ public class SysOperationLog implements Serializable {
     private String message;
 
     @TableField("TOTAL_TIME")
-    private Integer totalTime;
+    private Long totalTime;
 
+    @TableField(exist = false)
+    private String userName;
     public String getId() {
         return id;
     }
@@ -103,11 +106,11 @@ public class SysOperationLog implements Serializable {
     public void setMethod(String method) {
         this.method = method;
     }
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
     public String getIp() {
@@ -131,12 +134,20 @@ public class SysOperationLog implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
-    public Integer getTotalTime() {
+    public Long getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Integer totalTime) {
+    public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override

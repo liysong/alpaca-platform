@@ -14,7 +14,29 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        ID, NAME, CODE, VALUE, REL_PROCEDURE, EXEC_SQL
+        ID, NAME, CODE, VALUE, GROUP_CODE, DESCRIPTION
     </sql>
+
+    <select id="queryConfigPage" resultType="com.alpaca.admin.domain.SysConfigItem">
+        select   ID, NAME, CODE, VALUE, GROUP_CODE, DESCRIPTION
+
+        from    sys_config_item s
+        where  s.id is not null
+        <if test="name !=null and name !=''">
+          and (  s.name like '%'||#{name}||'%' or    s.code like '%'||#{name}||'%')
+        </if>
+
+        order  by s.GROUP_CODE
+    </select>
+
+    <select id="queryConfigByCode" resultType="com.alpaca.admin.domain.SysConfigItem">
+         select   ID, NAME, CODE, VALUE, GROUP_CODE, DESCRIPTION
+         from    sys_config_item s where  s.code = #{code}
+    </select>
+
+    <select id="queryConfigByGroup" resultType="com.alpaca.admin.domain.SysConfigItem">
+         select   ID, NAME, CODE, VALUE, GROUP_CODE, DESCRIPTION
+         from    sys_config_item s where  s.GROUP_CODE = #{groupCode}
+    </select>
 
 </mapper>

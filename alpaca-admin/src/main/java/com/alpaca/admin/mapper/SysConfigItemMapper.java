@@ -1,7 +1,11 @@
 package com.alpaca.admin.mapper;
 
 import com.alpaca.admin.domain.SysConfigItem;
+import com.alpaca.admin.utils.CustomPage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysConfigItemMapper extends BaseMapper<SysConfigItem> {
 
+    List<SysConfigItem> queryConfigPage(CustomPage<SysConfigItem> page, @Param("name") String name);
+
+    SysConfigItem queryConfigByCode(String code);
+
+    List<SysConfigItem>   queryConfigByGroup(String  groupCode);
 }

@@ -1,11 +1,13 @@
 package com.alpaca.admin.controller;
 
 
+import com.alpaca.admin.annotation.OperationLog;
 import com.alpaca.admin.domain.SysToken;
 import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.service.ISysTokenService;
 import com.alpaca.admin.service.ISysUserService;
 import com.alpaca.admin.shiro.ShiroUtils;
+import com.alpaca.common.state.OperateType;
 import com.alpaca.common.system.ResponseMessage;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
@@ -65,11 +67,10 @@ public class SysLoginController {
      */
     @RequestMapping(value = "/sys/login", method = RequestMethod.POST)
     public Map<String, Object> login(String username, String password, String captcha)throws IOException {
-        String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+      /*  String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         if(!captcha.equalsIgnoreCase(kaptcha)){
-          //  return ResponseMessage.error("验证码不正确");
             return ResponseMessage.error("验证码不正确");
-        }
+        }*/
 
         //用户信息
         SysUser user = sysUserService.querySysUserByLoginName(username);

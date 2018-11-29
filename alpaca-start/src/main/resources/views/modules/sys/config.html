@@ -24,7 +24,7 @@
 	<div v-show="showList">
 		<div class="grid-btn">
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control" v-model="q.key" @keyup.enter="query" placeholder="参数名">
+				<input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="参数名/参数code">
 			</div>
 			<a class="btn btn-default" @click="query">查询</a>
 			
@@ -40,9 +40,21 @@
 		<div class="panel-heading">{{title}}</div>
 		<form class="form-horizontal">
 			<div class="form-group">
-			   	<div class="col-sm-2 control-label">参数名</div>
+				<div class="col-sm-2 control-label">名称</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="config.name" placeholder="名称"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">参数组</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="config.groupCode" placeholder="参数组"/>
+				</div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">参数编码</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="config.key" placeholder="参数名"/>
+			      <input type="text" class="form-control" v-model="config.code" placeholder="参数名"/>
 			    </div>
 			</div>
 			<div class="form-group">
@@ -54,7 +66,7 @@
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">备注</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="config.remark" placeholder="备注"/>
+			      <input type="text" class="form-control" v-model="config.description" placeholder="备注"/>
 			    </div>
 			</div>
 			<div class="form-group">

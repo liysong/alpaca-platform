@@ -1,10 +1,12 @@
 package com.alpaca.admin.controller;
 
 
+import com.alpaca.admin.annotation.OperationLog;
 import com.alpaca.admin.domain.SysResource;
 import com.alpaca.admin.service.ISysResourceService;
 import com.alpaca.admin.shiro.service.IShiroService;
 import com.alpaca.common.state.DataState;
+import com.alpaca.common.state.OperateType;
 import com.alpaca.common.system.ResponseMessage;
 import com.alpaca.common.util.IdGenerator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -47,6 +49,8 @@ public class SysResourceController extends BaseController {
     }
 
     @RequestMapping("/save")
+    @RequiresPermissions("sys:menu:save")
+    @OperationLog(operationType= OperateType.SAVE,operationName="新增资源")
     public  ResponseMessage save(@RequestBody SysResource sysResource){
 
         sysResource.setId(IdGenerator.getNextId());
@@ -57,6 +61,8 @@ public class SysResourceController extends BaseController {
     }
 
     @RequestMapping("/update")
+    @RequiresPermissions("sys:menu:update")
+    @OperationLog(operationType= OperateType.UPDATE,operationName="更新资源")
     public  ResponseMessage update(@RequestBody SysResource sysResource){
 
         //sysResource.setId(IdGenerator.getNextId());
@@ -71,6 +77,7 @@ public class SysResourceController extends BaseController {
      */
     @RequestMapping("/info/{menuId}")
     @RequiresPermissions("sys:menu:info")
+    @OperationLog(operationType= OperateType.QUERY,operationName="查询资源")
     public ResponseMessage info(@PathVariable("menuId") String menuId){
         SysResource menu =  sysResourceService.getById(menuId);
         return ResponseMessage.ok().put("sysResource", menu);
@@ -89,6 +96,7 @@ public class SysResourceController extends BaseController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("sys:menu:list")
+    @OperationLog(operationType= OperateType.QUERY,operationName="查询资源列表")
     public List<SysResource> list(){
         List<SysResource> menuList = sysResourceService.list(new QueryWrapper<>());
 

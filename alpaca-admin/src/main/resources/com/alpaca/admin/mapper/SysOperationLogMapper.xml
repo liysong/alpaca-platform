@@ -23,4 +23,29 @@
         ID, LOG_TYPE, STATUS, NAME, USER_ID, CLASS_NAME, METHOD, CREATE_TIME, IP, PARAMS, MESSAGE, TOTAL_TIME
     </sql>
 
+    <select id="queryPage" resultType="com.alpaca.admin.domain.SysOperationLog">
+        select  slog.id,
+        slog.log_type,
+        slog.status,
+        slog.name,
+        slog.user_id,
+        slog.class_name,
+        slog.method,
+        slog.create_time,
+        slog.ip,
+        slog.params,
+        slog.message,
+        u.name as  userName,
+        slog.total_time from  sys_operation_log  slog
+        left join  sys_user u on  slog.user_id = u.id
+        where  slog.id is not null
+
+        <if test="name !='' and name !=null">
+            and (u.name like '%'||#{name}||'%' or slog.name like '%'||#{name}||'%')
+        </if>
+
+        order  by slog.create_time
+
+    </select>
+
 </mapper>
