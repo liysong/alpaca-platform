@@ -57,10 +57,7 @@
             and s.ORG_CODE like  '%'|| #{orgCode}||'%'
         </if>
 
-        <if test="id !=null and id != '' ">
-            and s.PARENT_ID = #{id}
-        </if>
-
+        start with s.id = #{id}  connect by prior s.id =  s.parent_id
         order by s.org_layer
     </select>
 

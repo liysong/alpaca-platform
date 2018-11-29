@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @since 2018-11-23
  */
 @Controller
-@RequestMapping("/sys-dic-group")
+@RequestMapping("/sys/group")
 public class SysDicGroupController {
 
 }
