@@ -19,6 +19,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     List<SysRole> queryPage(CustomPage<SysRole> page,@Param("name") String name);
 
-    List<SysRole> queryUserRole(String userId);
+    List<SysRole> queryUserRole(@Param("userId")String userId);
 
 }

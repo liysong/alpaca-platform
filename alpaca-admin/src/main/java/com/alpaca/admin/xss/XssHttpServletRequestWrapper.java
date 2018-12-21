@@ -1,6 +1,6 @@
 package com.alpaca.admin.xss;
 
-import com.alpaca.common.util.StringUtils;
+import com.grace.commons.util.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

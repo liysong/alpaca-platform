@@ -41,3 +41,9 @@ spring:
         config:
           multi-statement-allow: true
 
+#eureka配置中心
+eureka-server-url: http://bonait:bonait@192.168.1.168:12000
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka-server-url}/eureka

@@ -1,6 +1,7 @@
 package com.alpaca.admin.exception;
 
-import com.alpaca.common.system.ResponseMessage;
+
+import com.grace.commons.system.ResponseMessage;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

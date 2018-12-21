@@ -6,9 +6,9 @@ import com.alpaca.admin.mapper.SysRoleMapper;
 import com.alpaca.admin.service.ISysRoleResourceService;
 import com.alpaca.admin.service.ISysRoleService;
 import com.alpaca.admin.utils.CustomPage;
-import com.alpaca.common.state.DataState;
-import com.alpaca.common.util.IdGenerator;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.grace.commons.state.DataState;
+import com.grace.commons.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

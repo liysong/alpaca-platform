@@ -4,7 +4,7 @@ import com.alpaca.admin.domain.SysToken;
 import com.alpaca.admin.exception.AlpacaException;
 import com.alpaca.admin.oauth2.annotation.AuthIgnore;
 import com.alpaca.admin.service.ISysTokenService;
-import com.alpaca.common.util.StringUtils;
+import com.grace.commons.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

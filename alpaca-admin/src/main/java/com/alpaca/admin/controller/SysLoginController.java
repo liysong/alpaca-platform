@@ -7,10 +7,9 @@ import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.service.ISysTokenService;
 import com.alpaca.admin.service.ISysUserService;
 import com.alpaca.admin.shiro.ShiroUtils;
-import com.alpaca.common.state.OperateType;
-import com.alpaca.common.system.ResponseMessage;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.grace.commons.system.ResponseMessage;
 import org.apache.commons.io.IOUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;

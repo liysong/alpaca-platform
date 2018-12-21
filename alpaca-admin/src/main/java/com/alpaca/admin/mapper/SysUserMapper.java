@@ -4,7 +4,7 @@ import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.utils.CustomPage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.grace.entity.system.UserVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -33,6 +33,11 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     List<SysUser> queryUserPage(CustomPage<SysUser> page, @Param("userName") String userName, @Param("status")Integer status);
 
 
+    UserVo getUserByLoginName(String loginName);
+
+    UserVo  getUserByMobile(String  mobile);
+
+    UserVo  getUserById(String  id);
 
 
 }

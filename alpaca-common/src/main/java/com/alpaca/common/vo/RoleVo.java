@@ -1,77 +1,61 @@
-package com.alpaca.admin.domain;
+package com.alpaca.common.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
- * <p>
- * 
- * </p>
- *
- * @author song
- * @since 2018-11-23
+ * @Auther: song
+ * @Date: 2018/11/15 16:09
+ * @Description:
+ * @Version:1.0.0
  */
-@TableName("SYS_ROLE")
-public class SysRole implements Serializable {
+public class RoleVo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableField("ID")
     private String id;
 
     /**
      * 角色名称
      */
-    @TableField("NAME")
     private String name;
 
     /**
      * 角色编号,如admin
      */
-    @TableField("ROLE_CODE")
     private String roleCode;
 
     /**
      * 角色类型
      */
-    @TableField("ROLE_TYPE")
     private Integer roleType;
 
     /**
-     * 角色状态，是否可用，1:可用,0:不可用
+     * 角色状态，是否可用，0:可用,1:不可用
      */
-    @TableField("STATUS")
     private Integer status;
 
     /**
      * 角色描述
      */
-    @TableField("DESCRIPTION")
     private String description;
 
     /**
-     * 逻辑删除，1: 不删除,0:删除状态
+     * 逻辑删除，0: 不删除,1:删除状态
      */
-    @TableField("FLAG")
     private Integer flag;
 
     /**
      * 创建时间
      */
-    @TableField("CREATE_TIME")
     private Date createTime;
 
     /**
      * 更新时间
      */
-    @TableField("UPDATE_TIME")
     private Date updateTime;
 
-    @TableField(exist = false)
-    private List<String>  resourceIds;
+
+    private List<String > resourceIds;
 
     public String getId() {
         return id;
@@ -101,13 +85,8 @@ public class SysRole implements Serializable {
     public void setRoleType(Integer roleType) {
         this.roleType = roleType;
     }
-    public Integer getStatus() {
-        return status;
-    }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+
     public String getDescription() {
         return description;
     }
@@ -115,13 +94,7 @@ public class SysRole implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Integer getFlag() {
-        return flag;
-    }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
-    }
     public Date getCreateTime() {
         return createTime;
     }
@@ -137,6 +110,22 @@ public class SysRole implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     public List<String> getResourceIds() {
         return resourceIds;
     }
@@ -147,16 +136,16 @@ public class SysRole implements Serializable {
 
     @Override
     public String toString() {
-        return "SysRole{" +
-        "id=" + id +
-        ", name=" + name +
-        ", roleCode=" + roleCode +
-        ", roleType=" + roleType +
-        ", status=" + status +
-        ", description=" + description +
-        ", flag=" + flag +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        return "RoleVo{" +
+                "id=" + id +
+                ", name=" + name +
+                ", roleCode=" + roleCode +
+                ", roleType=" + roleType +
+                ", status=" + status +
+                ", description=" + description +
+                ", flag=" + flag +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                "}";
     }
 }

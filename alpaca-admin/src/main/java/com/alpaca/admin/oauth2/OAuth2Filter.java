@@ -1,7 +1,7 @@
 package com.alpaca.admin.oauth2;
 
-import com.alpaca.common.system.ResponseMessage;
-import com.alpaca.common.util.StringUtils;
+import com.grace.commons.system.ResponseMessage;
+import com.grace.commons.util.StringUtils;
 import com.google.gson.Gson;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;

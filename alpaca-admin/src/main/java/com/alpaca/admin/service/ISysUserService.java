@@ -2,8 +2,9 @@ package com.alpaca.admin.service;
 
 import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.utils.CustomPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.grace.entity.system.UserVo;
+
 
 import java.util.List;
 
@@ -31,5 +32,11 @@ public interface ISysUserService extends IService<SysUser> {
     List<SysUser> queryUserPage(CustomPage<SysUser> page, String userName, Integer status);
 
     void  deleteBatchUser(String [] userIds);
+
+    UserVo getUserByLoginName(String loginName);
+
+    UserVo  getUserByMobile(String  mobile);
+
+    UserVo  getUserById(String  id);
 
 }

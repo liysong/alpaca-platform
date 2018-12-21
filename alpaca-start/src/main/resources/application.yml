@@ -2,9 +2,10 @@
 spring:
     profiles:
         active: ora
-
     resources:
       static-locations: classpath:/static/,classpath:/views/
+    application:
+      name: admin-service
 mybatis:
     mapperLocations: classpath*:com/alpaca/*/mapper/*.xml
     typeAliasesPackage: com.alpaca

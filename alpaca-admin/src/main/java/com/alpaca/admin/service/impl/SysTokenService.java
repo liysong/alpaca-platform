@@ -5,7 +5,7 @@ import com.alpaca.admin.domain.SysToken;
 import com.alpaca.admin.mapper.SysTokenMapper;
 import com.alpaca.admin.oauth2.TokenGenerator;
 import com.alpaca.admin.service.ISysTokenService;
-import com.alpaca.common.util.IdGenerator;
+import com.grace.commons.util.IdGenerator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

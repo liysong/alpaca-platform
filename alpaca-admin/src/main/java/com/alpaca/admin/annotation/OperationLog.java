@@ -1,7 +1,9 @@
 package com.alpaca.admin.annotation;
 
 
-import com.alpaca.common.state.OperateType;
+
+
+import com.grace.commons.state.OperateType;
 
 import java.lang.annotation.*;
 

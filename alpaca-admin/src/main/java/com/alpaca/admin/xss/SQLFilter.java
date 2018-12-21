@@ -2,7 +2,8 @@ package com.alpaca.admin.xss;
 
 
 import com.alpaca.admin.exception.AlpacaException;
-import com.alpaca.common.util.StringUtils;
+import com.grace.commons.util.StringUtils;
+
 
 /**
  * @ClassName: SQLFilter

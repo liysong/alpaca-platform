@@ -10,13 +10,14 @@ import com.alpaca.admin.service.ISysUserRoleService;
 import com.alpaca.admin.service.ISysUserService;
 import com.alpaca.admin.shiro.ShiroUtils;
 import com.alpaca.admin.utils.CustomPage;
-import com.alpaca.common.page.PageUtils;
-import com.alpaca.common.state.DataState;
-import com.alpaca.common.state.OperateType;
-import com.alpaca.common.system.ResponseMessage;
-import com.alpaca.common.util.IdGenerator;
-import com.alpaca.common.util.StringUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import com.grace.commons.state.DataState;
+import com.grace.commons.state.OperateType;
+import com.grace.commons.system.ResponseMessage;
+import com.grace.commons.util.IdGenerator;
+import com.grace.commons.util.StringUtils;
+
+import com.grace.page.util.PageUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,5 +209,9 @@ public class SysUserController extends BaseController {
         return ResponseMessage.ok().put("user", sysUser);
     }
 
+ /*   @RequestMapping("getUserByLoginName/{loginName}")
+    public UserVo getUserByLoginName(@PathVariable("loginName")String loginName){
+        return  sysUserService.getUserByLoginName(loginName);
+    }*/
 
 }

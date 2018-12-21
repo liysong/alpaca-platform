@@ -2,7 +2,7 @@ package com.alpaca.admin.shiro;
 
 import com.alpaca.admin.domain.SysUser;
 import com.alpaca.admin.exception.AlpacaException;
-import com.alpaca.common.util.StringUtils;
+import com.grace.commons.util.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;

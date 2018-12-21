@@ -4,7 +4,8 @@ import com.alpaca.admin.domain.SysOperationLog;
 import com.alpaca.admin.service.ISysOperationLogService;
 import com.alpaca.admin.annotation.OperationLog;
 import com.alpaca.admin.shiro.ShiroUtils;
-import com.alpaca.common.util.IdGenerator;
+
+import com.grace.commons.util.IdGenerator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
